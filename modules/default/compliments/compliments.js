@@ -142,17 +142,28 @@ Module.register("compliments", {
 	randomCompliment: function() {
 		var compliments = this.complimentArray();
 		var index = this.randomIndex(compliments);
-
 		return compliments[index];
+		
 	},
 
 	// Override dom generator.
 	getDom: function() {
+		var currentTime = moment();
+		var day = currentTime.format("DD");
+		var month = currentTime.format("MM");
+		var extraText = "";
+		if (day == "06" && month == "10"){
+			extraText += "Happy Anniversary!";
+		}
+		var toAdd = document.createElement("div");
+		toAdd.innerHTML = extraText + "<br>";
+		
 		var complimentText = this.randomCompliment();
 
 		var compliment = document.createTextNode(complimentText);
 		var wrapper = document.createElement("div");
 		wrapper.className = this.config.classes ? this.config.classes : "thin xlarge bright";
+		wrapper.appendChild(toAdd);
 		wrapper.appendChild(compliment);
 
 		return wrapper;
